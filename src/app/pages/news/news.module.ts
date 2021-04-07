@@ -8,6 +8,7 @@ import {NewsRoutingModule} from "./news-routing.module";
 import {NewsComponent} from "./news.component";
 import {NewsComponentState} from "./news.component.state";
 import {NewsState} from "./store/news.state";
+import {NewsRepository} from "../../repository/news.repository";
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import {NewsState} from "./store/news.state";
   ],
   imports: [
     CommonModule,
+
     NewsRoutingModule,
 
     // Store
@@ -25,6 +27,9 @@ import {NewsState} from "./store/news.state";
 
     // Material UI Components
     MatCardModule,
+  ],
+  providers: [
+    NewsRepository,
   ]
 })
 export class NewsModule {

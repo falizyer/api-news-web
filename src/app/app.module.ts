@@ -10,6 +10,8 @@ import {AppComponent} from "./app.component";
 import {MainHeaderModule} from "./components/main-header/main-header.module";
 import {MainFooterModule} from "./components/main-footer/main-footer.module";
 import {AppComponentState} from "./app.component.state";
+import {HttpClientModule} from "@angular/common/http";
+
 import {environment} from "environments/environment";
 
 @NgModule({
@@ -18,6 +20,7 @@ import {environment} from "environments/environment";
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
 

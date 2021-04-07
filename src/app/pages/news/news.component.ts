@@ -3,7 +3,7 @@ import {Store, Select} from "@ngxs/store";
 import {Observable, Subscription} from "rxjs";
 
 import {INewsModel} from "models/news.model";
-import {NewsState} from "./store/news.state";
+import {GetNews, NewsState} from "./store/news.state";
 
 @Component({
   selector: "section[apn-news]",
@@ -14,15 +14,13 @@ export class NewsComponent implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription();
 
-  @Select(NewsState) private $news: Observable<INewsModel[]>;
-
-  news: INewsModel[];
+  @Select(NewsState) $news: Observable<INewsModel[]>;
 
   constructor(private store: Store) {
   }
 
   ngOnInit(): void {
-    this.subscriptions.add(this.$news.subscribe(news => this.news = news));
+    // this.store.dispatch([new GetNews({})]);
   }
 
   ngOnDestroy() {

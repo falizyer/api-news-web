@@ -1,7 +1,16 @@
 import {Injectable} from "@angular/core";
-import {Action, State, Selector, StateContext} from "@ngxs/store";
+import {Action, State, Selector, StateContext, Store} from "@ngxs/store";
 
 import {INewsModel, INewsComponentState} from "models/news.model";
+import {NewsRepository} from "../../../repository/news.repository";
+import {tap} from "rxjs/operators";
+
+export class GetNews {
+  static readonly type = "[NewsState] GetNews";
+
+  constructor(public payload: {}) {
+  }
+}
 
 export class UpdateNews {
   static readonly type = "[NewsState] UpdateNews";
@@ -18,7 +27,7 @@ export class UpdateNews {
       subtitle: "The Shiba The Shiba The Shiba",
       avatar: "https://material.angular.io/assets/img/examples/shiba1.jpg",
       image: "https://material.angular.io/assets/img/examples/shiba2.jpg",
-      imageText:  "Photo of a Shiba Inu",
+      imageText: "Photo of a Shiba Inu",
       content: `
         <p>
           The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
@@ -32,7 +41,7 @@ export class UpdateNews {
       subtitle: "The Shiba The Shiba The Shiba",
       avatar: "https://material.angular.io/assets/img/examples/shiba1.jpg",
       image: "https://material.angular.io/assets/img/examples/shiba2.jpg",
-      imageText:  "Photo of a Shiba Inu",
+      imageText: "Photo of a Shiba Inu",
       content: `
         <p>
           The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
@@ -46,8 +55,22 @@ export class UpdateNews {
 @Injectable()
 export class NewsState {
 
+  constructor(private newsRepository: NewsRepository) {
+  }
+
+  @Action(GetNews)
+  getNews(ctx: StateContext<INewsComponentState>) {
+    return this.newsRepository
+      .getNews()
+      .pipe(tap(data => {
+        ctx.patchState({
+          news: data.news,
+        });
+      }));
+  }
+
   @Action(UpdateNews)
-  updateNews(ctx: StateContext<INewsComponentState>, payload: { news: INewsModel[] }): void {
-    ctx.patchState(payload)
+  updateNews(ctx: StateContext<INewsComponentState>, payload: { news: INewsModel[], }): void {
+    ctx.patchState(payload);
   }
 }
