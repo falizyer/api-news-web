@@ -1,7 +1,7 @@
 import {browser, logging} from "protractor";
 import {AppPage} from "./app.po";
 
-describe("workspace-project App", () => {
+describe("workspace-project AppModule", () => {
   let page: AppPage;
 
   beforeEach(() => {
